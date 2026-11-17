@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package byte.v.forge.waapp.protocol.v1;
+
+option go_package = "github.com/byte-v-forge/wa-app/gen/go/byte/v/forge/waapp/protocol/v1;protocolv1";
+
+// Private, version-specific registration material. Never expose or log values.
+// Field numbers match the upstream AndroidBuildMaterial bundle.
+message AndroidBuildMaterial {
+  string app_version = 1;
+  uint32 version_code = 2;
+  bytes token_hmac_key = 3;
+  bytes signing_certificate = 4;
+  bytes classes_dex_md5 = 5;
+  bytes server_public_key = 6;
+  reserved 7;
+  bytes noise_root_public_key = 8;
+  AndroidApplicationIntegrity application_integrity = 9;
+  reserved 10, 11;
+}
+
+message AndroidApplicationIntegrity {
+  uint64 apk_size = 1;
+  bytes apk_sha256 = 2;
+  bytes apk_prefix_sha256 = 3;
+  bytes primary_dex_sha256 = 4;
+  bytes certificate_sha1 = 5;
+  reserved 6, 7, 8;
+}
+
+// Sensitive, service-owned continuation from the code request to verification.
+message AndroidVerificationContext {
+  string login = 1;
+  string auth_response = 2;
+  string context = 3;
+  string advertising_id = 4;
+}
